@@ -6,17 +6,17 @@ export const MyContext = createContext();
 
 const Provider = ({ children }) => {
   const [planets, setPlanets] = useState([]);
-
-  const fetchPlanets = async () => {
-    const data = await fetchAllPlanets();
-    setPlanets(data);
-  };
+  const [filterByName, setFilterByName] = useState({ name: '' });
 
   useEffect(() => {
+    const fetchPlanets = async () => {
+      const data = await fetchAllPlanets();
+      setPlanets(data);
+    };
     fetchPlanets();
   }, []);
 
-  const value = { planets };
+  const value = { planets, filterByName, setFilterByName };
 
   return (
     <MyContext.Provider value={ value }>
@@ -26,7 +26,7 @@ const Provider = ({ children }) => {
 };
 
 Provider.propTypes = {
-  children: PropTypes.objectOf(PropTypes.any).isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default Provider;
