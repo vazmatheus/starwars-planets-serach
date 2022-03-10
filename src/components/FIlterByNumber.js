@@ -1,6 +1,14 @@
 import React, { useContext, useState } from 'react';
 import { MyContext } from '../context';
 
+const columns = [
+  'population',
+  'orbital_period',
+  'diameter',
+  'rotation_period',
+  'surface_water',
+];
+
 const FilterByNumber = () => {
   const { filterByNumber, setFilterByNumber } = useContext(MyContext);
   const [filterByNumericValues, setFilterByNumericValue] = useState(
@@ -20,10 +28,16 @@ const FilterByNumber = () => {
   };
 
   const handleClick = () => {
-    setFilterByNumber([
+    const newFilterByNumber = [
       ...filterByNumber,
       filterByNumericValues,
-    ]);
+    ];
+    setFilterByNumber(newFilterByNumber);
+    setFilterByNumericValue({
+      column: columns.find((c) => !newFilterByNumber.some(({ column }) => column === c)),
+      comparison: 'maior que',
+      value: '0',
+    });
   };
 
   return (
@@ -38,11 +52,8 @@ const FilterByNumber = () => {
             data-testid="column-filter"
             onChange={ handleChange }
           >
-            <option value="population">population</option>
-            <option value="orbital_period">orbital_period</option>
-            <option value="diameter">diameter</option>
-            <option value="rotation_period">rotation_period</option>
-            <option value="surface_water">surface_water</option>
+            {columns.filter((c) => !filterByNumber.some(({ column }) => column === c))
+              .map((column) => <option key={ column } value={ column }>{column}</option>)}
           </select>
         </label>
         <label htmlFor="comparison">
