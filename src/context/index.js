@@ -7,6 +7,7 @@ export const MyContext = createContext();
 const Provider = ({ children }) => {
   const [planets, setPlanets] = useState([]);
   const [filterByName, setFilterByName] = useState({ name: '' });
+  const [filterByNumber, setFilterByNumber] = useState([]);
 
   useEffect(() => {
     const fetchPlanets = async () => {
@@ -16,7 +17,13 @@ const Provider = ({ children }) => {
     fetchPlanets();
   }, []);
 
-  const value = { planets, filterByName, setFilterByName };
+  const value = {
+    planets,
+    filterByName,
+    setFilterByName,
+    filterByNumber,
+    setFilterByNumber,
+  };
 
   return (
     <MyContext.Provider value={ value }>

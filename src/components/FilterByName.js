@@ -13,13 +13,17 @@ const FilterByName = () => {
 
   return (
     <div>
-      <h1>Project Star Wars - Trybe</h1>
-      <input
-        type="text"
-        name={ filterByName }
-        data-testid="name-filter"
-        onChange={ handleChange }
-      />
+      <label htmlFor="nameFilter">
+        Name:
+        <input
+          type="text"
+          name="nameFilter"
+          value={ filterByName.name }
+          id="nameFilter"
+          data-testid="name-filter"
+          onChange={ handleChange }
+        />
+      </label>
     </div>
   );
 };
