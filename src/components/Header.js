@@ -4,7 +4,6 @@ import FilterByNumber from './FIlterByNumber';
 
 const Header = () => (
   <div>
-    <h1>Project Star Wars - Trybe</h1>
     <FilterByName />
     <FilterByNumber />
   </div>

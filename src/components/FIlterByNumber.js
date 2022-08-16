@@ -1,4 +1,12 @@
 import React, { useContext, useState } from 'react';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import TextField from '@mui/material/TextField';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 import { MyContext } from '../context';
 
 const columns = [
@@ -14,7 +22,7 @@ const FilterByNumber = () => {
   const [filterByNumericValues, setFilterByNumericValue] = useState(
     {
       column: 'population',
-      comparison: 'maior que',
+      comparison: 'bigger than',
       value: '0',
     },
   );
@@ -35,61 +43,70 @@ const FilterByNumber = () => {
     setFilterByNumber(newFilterByNumber);
     setFilterByNumericValue({
       column: columns.find((c) => !newFilterByNumber.some(({ column }) => column === c)),
-      comparison: 'maior que',
+      comparison: 'bigger than',
       value: '0',
     });
   };
 
   return (
-    <div>
-      <form>
-        <label htmlFor="column">
-          Column:
-          <select
-            name="column"
-            id="column"
-            value={ filterByNumericValues.column }
-            data-testid="column-filter"
-            onChange={ handleChange }
-          >
-            {columns.filter((c) => !filterByNumber.some(({ column }) => column === c))
-              .map((column) => <option key={ column } value={ column }>{column}</option>)}
-          </select>
-        </label>
-        <label htmlFor="comparison">
-          Comparison:
-          <select
-            name="comparison"
-            id="comparison"
-            value={ filterByNumericValues.comparison }
-            data-testid="comparison-filter"
-            onChange={ handleChange }
-          >
-            <option value="maior que">maior que</option>
-            <option value="menor que">menor que</option>
-            <option value="igual a">igual a</option>
-          </select>
-        </label>
-        <label htmlFor="value">
-          Value:
-          <input
-            type="number"
-            name="value"
-            value={ filterByNumericValues.value }
-            id="value"
-            data-testid="value-filter"
-            onChange={ handleChange }
-          />
-        </label>
-        <button
-          type="button"
-          data-testid="button-filter"
+    <Box sx={ { minWidth: 120, display: 'inline-flex' } }>
+      <FormControl
+        fullWidth
+        sx={ { margin:"10px 10px 10px 0px" } }
+      >
+        <InputLabel id="column">Column</InputLabel>
+        <Select
+          name="column"
+          labelId="column"
+          id="column"
+          value={ filterByNumericValues.column }
+          label="Column"
+          onChange={ handleChange }
+        >
+          {columns.filter((c) => !filterByNumber.some(({ column }) => column === c))
+            .map((column) => <MenuItem key={ column } value={ column }>{column}</MenuItem>)}
+        </Select>
+      </FormControl>
+      <FormControl
+        fullWidth
+        sx={ { margin:"10px 10px 10px 0px" } }
+      >
+        <InputLabel id="comparison">Comparison</InputLabel>
+        <Select
+          name="comparison"
+          labelId="comparison"
+          id="comparison"
+          value={ filterByNumericValues.comparison }
+          label="Comparison"
+          onChange={ handleChange }
+        >
+          <MenuItem value="bigger than">bigger than</MenuItem>
+          <MenuItem value="less than">less than</MenuItem>
+          <MenuItem value="equal to">equal to</MenuItem>
+        </Select>
+      </FormControl>
+      <TextField
+        id="value"
+        label="Value"
+        name="value"
+        type="number"
+        value={ filterByNumericValues.value }
+        onChange={ handleChange }
+        sx={ { margin:"10px 10px 10px 0px" } }
+        InputLabelProps={ {
+          shrink: true,
+        } }
+      />
+      <Stack spacing={ 2 } direction="row">
+        <Button
+          variant="contained"
           onClick={ handleClick }
+          sx={ { margin:"10px 10px 10px 0px" } }
         >
           Filter
-        </button>
-      </form>
-    </div>
+        </Button>
+      </Stack>
+    </Box>
   );
 };
 
